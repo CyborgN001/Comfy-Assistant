@@ -1,0 +1,891 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ComfyUI Assistant V3.6</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">✦</div>
+
+            <div>
+                <h2>COMFYUI</h2>
+                <span>ASSISTANT 3.6</span>
+            </div>
+        </div>
+
+        <div class="nav-label">WORKSPACE</div>
+
+        <button class="nav-item active" data-page="dashboard">
+            ⌂ Dashboard
+        </button>
+
+        <button class="nav-item" data-page="zimage">
+            ✦ Z-Image
+        </button>
+
+        <button class="nav-item" data-page="upscaler">
+            ⬈ Upscaler
+        </button>
+
+        <button class="nav-item" data-page="gallery">
+            ▦ Gallery
+        </button>
+
+        <div class="nav-label">SYSTEM</div>
+
+        <button class="nav-item" data-page="settings">
+            ⚙ Einstellungen
+        </button>
+
+        <div class="sidebar-bottom">
+
+            <div class="connection-indicator">
+                <span id="connection-dot"></span>
+
+                <div>
+                    <strong id="connection-label">
+                        Verbindung wird geprüft
+                    </strong>
+
+                    <small>ComfyUI Server</small>
+                </div>
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- HAUPTBEREICH -->
+
+    <main class="main">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div>
+                <span class="top-label">
+                    CREATIVE WORKSPACE
+                </span>
+
+                <h1 id="page-title">Dashboard</h1>
+            </div>
+
+            <div class="top-status">
+                <span class="status-dot"></span>
+                <span id="top-status">Verbinde...</span>
+            </div>
+
+        </header>
+
+
+        <!-- DASHBOARD -->
+
+        <section class="page active" id="page-dashboard">
+
+            <div class="welcome">
+
+                <div>
+                    <span class="eyebrow">
+                        YOUR AI IMAGE STUDIO
+                    </span>
+
+                    <h2>Willkommen zurück.</h2>
+
+                    <p>
+                        Dein persönliches ComfyUI Creative Studio.
+                    </p>
+                </div>
+
+                <div class="welcome-symbol">✦</div>
+
+            </div>
+
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <span>COMFYUI SERVER</span>
+
+                    <h3 id="dashboard-connection">
+                        Prüfe...
+                    </h3>
+
+                    <small>127.0.0.1:8188</small>
+                </div>
+
+                <div class="stat-card">
+                    <span>IMAGE GENERATION</span>
+                    <h3>Z-Image</h3>
+                    <small>Workflow bereit</small>
+                </div>
+
+                <div class="stat-card">
+                    <span>UPSCALE</span>
+                    <h3>Optional</h3>
+                    <small>Manuell verwendbar</small>
+                </div>
+
+            </div>
+
+
+            <div class="section-heading">
+                <div>
+                    <h2>Deine Werkzeuge</h2>
+                    <p>Wähle einen Arbeitsbereich.</p>
+                </div>
+            </div>
+
+
+            <div class="tool-grid">
+
+                <button class="tool-card" data-open="zimage">
+                    <div class="tool-icon purple">✦</div>
+                    <h3>Z-Image</h3>
+
+                    <p>
+                        Erstelle Bilder mit deinem Z-Image-Workflow.
+                    </p>
+
+                    <span class="tool-link">Öffnen →</span>
+                </button>
+
+
+                <button class="tool-card" data-open="upscaler">
+                    <div class="tool-icon blue">⬈</div>
+                    <h3>AI Upscaler</h3>
+
+                    <p>
+                        Skaliere Bilder auf 2x, 3x oder 4x.
+                    </p>
+
+                    <span class="tool-link">Öffnen →</span>
+                </button>
+
+
+                <button class="tool-card" data-open="gallery">
+                    <div class="tool-icon green">▦</div>
+                    <h3>Gallery</h3>
+
+                    <p>
+                        Betrachte deine Ergebnisse und speichere sie.
+                    </p>
+
+                    <span class="tool-link">Öffnen →</span>
+                </button>
+
+            </div>
+
+
+            <div class="info-panel">
+                <div>
+                    <h3>ComfyUI Assistant 3.6</h3>
+                    <p>
+                        Lokale Bildgenerierung und Bildbearbeitung.
+                    </p>
+                </div>
+
+                <span class="version">VERSION 3.6</span>
+            </div>
+
+        </section>
+
+
+        <!-- Z-IMAGE -->
+
+        <section class="page" id="page-zimage">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Bildgenerierung</h2>
+                    <p>Steuere deinen Z-Image-Workflow.</p>
+                </div>
+            </div>
+
+
+            <!-- MODEL MANAGER -->
+
+            <div class="panel">
+
+                <div class="panel-title">
+                    <h3>01 / Modelle auswählen</h3>
+                    <span class="tag">MODEL MANAGER</span>
+                </div>
+
+                <p class="hint">
+                    Modelle werden direkt von ComfyUI geladen.
+                </p>
+
+                <label for="unet-model">
+                    UNET / CHECKPOINT MODELL
+                </label>
+
+                <select id="unet-model">
+                    <option value="">Modelle werden geladen...</option>
+                </select>
+
+
+                <label for="clip-model">CLIP MODELL</label>
+
+                <select id="clip-model">
+                    <option value="">Modelle werden geladen...</option>
+                </select>
+
+
+                <label for="vae-model">VAE MODELL</label>
+
+                <select id="vae-model">
+                    <option value="">Modelle werden geladen...</option>
+                </select>
+
+
+                <div class="model-actions">
+
+                    <button class="secondary-button"
+                            id="refresh-models"
+                            type="button">
+                        ↻ Modelle aktualisieren
+                    </button>
+
+                    <span id="model-status" class="hint">
+                        Noch nicht geladen
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- PROMPTS -->
+
+            <div class="panel">
+
+                <div class="panel-title">
+                    <h3>02 / Prompt</h3>
+                    <span class="tag">Z-IMAGE</span>
+                </div>
+
+                <label for="positive-prompt">
+                    Positiver Prompt
+                </label>
+
+                <textarea
+                    id="positive-prompt"
+                    rows="6"
+                    placeholder="Beschreibe dein gewünschtes Bild..."
+                ></textarea>
+
+
+                <label for="negative-prompt">
+                    Negativer Prompt
+                </label>
+
+                <textarea
+                    id="negative-prompt"
+                    rows="4"
+                    placeholder="Unerwünschte Merkmale..."
+                ></textarea>
+
+            </div>
+
+
+            <!-- BILDPARAMETER -->
+
+            <div class="panel">
+
+                <div class="panel-title">
+                    <h3>03 / Bildparameter</h3>
+                </div>
+
+                <div class="form-grid">
+
+                    <div>
+                        <label for="image-width">Breite</label>
+
+                        <input
+                            type="number"
+                            id="image-width"
+                            value="832"
+                            min="64"
+                            max="4096"
+                            step="8"
+                        >
+                    </div>
+
+
+                    <div>
+                        <label for="image-height">Höhe</label>
+
+                        <input
+                            type="number"
+                            id="image-height"
+                            value="1216"
+                            min="64"
+                            max="4096"
+                            step="8"
+                        >
+                    </div>
+
+
+                    <div>
+                        <label for="steps">Steps</label>
+
+                        <input
+                            type="number"
+                            id="steps"
+                            value="10"
+                            min="1"
+                            max="150"
+                        >
+                    </div>
+
+
+                    <div>
+                        <label for="cfg">CFG</label>
+
+                        <input
+                            type="number"
+                            id="cfg"
+                            value="1"
+                            min="0"
+                            max="30"
+                            step="0.1"
+                        >
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- BATCH GENERATION -->
+
+            <div class="panel batch-panel">
+
+                <div class="panel-title">
+                    <h3>04 / Mehrfachgenerierung</h3>
+                    <span class="tag">BATCH GENERATION</span>
+                </div>
+
+                <p class="hint">
+                    Erstelle mehrere Bilder mit denselben Einstellungen.
+                </p>
+
+                <label for="image-count">
+                    ANZAHL DER BILDER
+                </label>
+
+                <select id="image-count">
+                    <option value="1">1 Bild</option>
+                    <option value="2">2 Bilder</option>
+                    <option value="3">3 Bilder</option>
+                    <option value="4">4 Bilder</option>
+                    <option value="5">5 Bilder</option>
+                    <option value="6">6 Bilder</option>
+                    <option value="8">8 Bilder</option>
+                    <option value="10">10 Bilder</option>
+                    <option value="15">15 Bilder</option>
+                    <option value="20">20 Bilder</option>
+                </select>
+
+                <div class="batch-info">
+                    <span>✦</span>
+
+                    <p>
+                        Jedes Bild kann einen eigenen Zufalls-Seed erhalten.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- SEED -->
+
+            <div class="panel">
+
+                <div class="panel-title">
+                    <h3>05 / Seed</h3>
+                </div>
+
+                <label class="checkbox-row">
+                    <input
+                        type="checkbox"
+                        id="random-seed"
+                        checked
+                    >
+                    Zufälligen Seed verwenden
+                </label>
+
+
+                <label for="seed">Manueller Seed</label>
+
+                <input
+                    type="number"
+                    id="seed"
+                    value="815075861117162"
+                    disabled
+                >
+
+
+                <label for="filename-prefix">
+                    Dateinamen-Präfix
+                </label>
+
+                <input
+                    type="text"
+                    id="filename-prefix"
+                    value="ComfyUI"
+                >
+
+            </div>
+
+
+            <!-- GENERIEREN -->
+
+            <button
+                class="primary-button"
+                id="generate-button"
+                type="button"
+            >
+                ✦ BILDER GENERIEREN
+            </button>
+
+
+            <!-- GESAMTFORTSCHRITT -->
+
+            <div class="progress-panel hidden"
+                 id="generate-progress">
+
+                <div class="progress-header">
+                    <strong id="generate-status">
+                        Generierung läuft...
+                    </strong>
+
+                    <span id="generate-percent">Live</span>
+                    <small id="generate-elapsed" class="progress-elapsed">00:00</small>
+                </div>
+
+                <div class="progress-track">
+                    <div
+                        class="progress-fill"
+                        id="generate-progress-bar"
+                    ></div>
+                </div>
+
+                <p id="generate-message">
+                    Bitte warten...
+                </p>
+
+            </div>
+
+
+            <!-- BATCH STATUS -->
+
+            <div class="panel hidden" id="batch-progress-panel">
+
+                <div class="panel-title">
+                    <h3>Einzelner Bildfortschritt</h3>
+                    <span class="tag">BATCH STATUS</span>
+                </div>
+
+                <div id="batch-progress-list"></div>
+
+            </div>
+
+
+            <div id="generate-results" class="result-area"></div>
+
+        </section>
+
+<!-- ENDE TEIL 1 -->
+        <!-- =========================================
+             UPSCALER
+        ========================================== -->
+
+        <section class="page" id="page-upscaler">
+
+            <div class="section-heading">
+                <div>
+                    <h2>AI Upscaler</h2>
+                    <p>Vergleiche Original und Ergebnis und nutze klassische oder KI-basierte Upscaler.</p>
+                </div>
+                <span class="tag">MANUELL</span>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title">
+                    <h3>01 / Bild auswählen</h3>
+                </div>
+
+                <label class="upload-area" for="upscale-image">
+                    <span class="upload-icon">⇧</span>
+                    <strong>Bild hier auswählen</strong>
+                    <span>PNG, JPG, WEBP oder BMP · Max. 50 MB</span>
+
+                    <input
+                        type="file"
+                        id="upscale-image"
+                        accept="image/png,image/jpeg,image/webp,image/bmp"
+                        hidden
+                    >
+                </label>
+
+                <div id="upload-preview" class="upload-preview hidden">
+                    <img id="original-preview" alt="Vorschau des Originalbildes">
+
+                    <div class="upload-preview-meta">
+                        <strong id="original-filename"></strong>
+                        <p>Originalbild ausgewählt</p>
+                        <small id="original-dimensions" class="hint"></small>
+                    </div>
+
+                    <button
+                        class="small-button"
+                        id="remove-upload"
+                        type="button"
+                    >
+                        Entfernen
+                    </button>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title">
+                    <h3>02 / Upscaling-Einstellungen</h3>
+                </div>
+
+                <label for="upscale-scale">
+                    Skalierungsfaktor
+                </label>
+
+                <select id="upscale-scale">
+                    <option value="2">2x – Standard</option>
+                    <option value="3">3x</option>
+                    <option value="4">4x</option>
+                    <option value="8">8x</option>
+                </select>
+
+                <label for="upscale-method">
+                    Methode
+                </label>
+
+                <select id="upscale-method">
+                    <option value="lanczos">Lanczos</option>
+                    <option value="bicubic">Bicubic</option>
+                    <option value="bilinear">Bilinear</option>
+                    <option value="nearest-exact">Nearest Exact</option>
+                    <option value="area">Area</option>
+                </select>
+
+                <label for="upscale-model">KI-Upscale-Modell (optional)</label>
+                <select id="upscale-model">
+                    <option value="">Kein KI-Modell – klassisches Resize</option>
+                </select>
+                <p id="upscale-model-status" class="hint">
+                    Die KI-Modellliste wird aus ComfyUI/models/upscale_models geladen.
+                </p>
+                <p id="upscale-mode-note" class="hint">
+                    Klassischer ComfyUI-Upscale: Skalierungsfaktor und Interpolationsmethode werden direkt angewendet.
+                </p>
+
+                <label for="upscale-filename">
+                    Dateinamen-Präfix
+                </label>
+
+                <input
+                    type="text"
+                    id="upscale-filename"
+                    value="Upscaled"
+                >
+            </div>
+
+            <button
+                class="primary-button blue-button"
+                id="upscale-button"
+                type="button"
+            >
+                ⬈ UPSCALING STARTEN
+            </button>
+
+            <p class="hint">
+                Der Upscaler startet ausschließlich,
+                wenn du diesen Button anklickst.
+            </p>
+
+            <div id="upscale-result-preview" class="panel hidden">
+                <div class="panel-title">
+                    <h3>03 / Vorher-Nachher-Vorschau</h3>
+                    <span class="tag">ERGEBNIS</span>
+                </div>
+                <p id="upscale-result-name" class="hint">Upscaling-Ergebnis</p>
+                <div class="upscale-compare-stage">
+                    <img id="upscale-before-image" alt="Originalbild im Vergleich">
+                    <img id="upscale-after-image" class="upscale-after-image" alt="Hochskaliertes Ergebnis">
+                    <div id="upscale-compare-handle" class="upscale-compare-handle"></div>
+                </div>
+                <div class="upscale-compare-labels">
+                    <span>Original</span><span>Ergebnis</span>
+                </div>
+                <label for="upscale-compare-range">Vergleichsregler</label>
+                <input id="upscale-compare-range" class="upscale-compare-range" type="range" min="0" max="100" value="50">
+                <div class="upscale-result-footer">
+                    <small id="upscale-result-dimensions" class="hint"></small>
+                    <a id="upscale-result-download" class="download-button" href="#" download>⬇ Ergebnis speichern</a>
+                </div>
+            </div>
+
+            <div id="upscale-progress" class="progress-panel hidden">
+                <div class="progress-header">
+                    <strong id="upscale-status">
+                        Upscaling läuft...
+                    </strong>
+
+                    <span id="upscale-percent">Live</span>
+                    <small id="upscale-elapsed" class="progress-elapsed">00:00</small>
+                </div>
+
+                <div class="progress-track">
+                    <div
+                        class="progress-fill blue-fill"
+                        id="upscale-progress-bar"
+                    ></div>
+                </div>
+
+                <p id="upscale-message">
+                    Bitte warten...
+                </p>
+            </div>
+
+            <div id="upscale-results" class="result-area"></div>
+
+        </section>
+
+
+        <!-- =========================================
+             GALERIE
+        ========================================== -->
+
+        <section class="page" id="page-gallery">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Gallery</h2>
+                    <p>Deine generierten und hochskalierten Bilder.</p>
+                </div>
+
+                <button
+                    class="small-button"
+                    id="clear-gallery"
+                    type="button"
+                >
+                    Galerie leeren
+                </button>
+            </div>
+
+            <div class="gallery-toolbar">
+                <span id="gallery-count">0 Bilder</span>
+
+                <span class="hint">
+                    Bild anklicken für Originalgröße
+                </span>
+            </div>
+
+            <div id="gallery-grid" class="gallery-grid">
+                <div class="empty-state">
+                    <span>▦</span>
+                    <h3>Noch keine Bilder</h3>
+                    <p>Deine Ergebnisse erscheinen hier.</p>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             EINSTELLUNGEN
+        ========================================== -->
+
+        <section class="page" id="page-settings">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Einstellungen</h2>
+                    <p>Verbindung und Workflow-Status.</p>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title">
+                    <h3>ComfyUI Server</h3>
+                </div>
+
+                <label for="server-address">
+                    Server-Adresse
+                </label>
+
+                <input
+                    type="text"
+                    id="server-address"
+                    value="http://127.0.0.1:8188"
+                    disabled
+                >
+
+                <div class="connection-detail">
+                    <span id="settings-connection-dot"></span>
+
+                    <span id="settings-connection">
+                        Verbindung wird geprüft...
+                    </span>
+                </div>
+
+                <button
+                    class="secondary-button"
+                    id="refresh-status"
+                    type="button"
+                >
+                    Verbindung erneut prüfen
+                </button>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title">
+                    <h3>Workflow-Status</h3>
+                </div>
+
+                <div class="workflow-status">
+                    <span>Z-Image</span>
+                    <strong id="z-workflow-status">
+                        Prüfe...
+                    </strong>
+                </div>
+
+                <div class="workflow-status">
+                    <span>Upscaler</span>
+                    <strong id="u-workflow-status">
+                        Prüfe...
+                    </strong>
+                </div>
+            </div>
+
+            <div class="info-panel">
+                <h3>ComfyUI Assistant</h3>
+                <p>Flask · ComfyUI API · Local Creative Studio</p>
+            </div>
+
+        </section>
+
+        <!-- =========================================
+             FOOTER
+        ========================================== -->
+
+        <footer>
+            COMFYUI ASSISTANT 3.6
+
+            <span>
+                LOCAL AI CREATIVE STUDIO
+            </span>
+        </footer>
+
+    </main>
+
+</div>
+
+
+<!-- =============================================
+     LIGHTBOX / ORIGINALGRÖSSE
+============================================== -->
+
+<div
+    id="image-lightbox"
+    class="image-lightbox hidden"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Bild in Originalgröße"
+>
+
+    <div class="lightbox-header">
+
+        <div class="lightbox-title">
+            <strong>Bildansicht</strong>
+
+            <span id="lightbox-filename">
+                Originalgröße
+            </span>
+        </div>
+
+        <div class="lightbox-actions">
+
+            <a
+                id="lightbox-download"
+                class="small-button"
+                href="#"
+                download
+            >
+                ↓ Bild speichern
+            </a>
+
+            <button
+                type="button"
+                id="lightbox-close"
+                class="lightbox-close"
+                aria-label="Bildansicht schließen"
+                title="Schließen (ESC)"
+            >
+                ×
+            </button>
+
+        </div>
+
+    </div>
+
+    <div
+        class="lightbox-content"
+        id="lightbox-background"
+    >
+
+        <img
+            id="lightbox-image"
+            src=""
+            alt="Bild in Originalgröße"
+        >
+
+    </div>
+
+    <div class="lightbox-footer">
+        Zum Schließen ESC oder × drücken.
+    </div>
+
+</div>
+
+
+<!-- =============================================
+     TOAST BENACHRICHTIGUNGEN
+============================================== -->
+
+<div id="toast-container"></div>
+
+
+<!-- =============================================
+     JAVASCRIPT
+============================================== -->
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+
+</body>
+</html>
